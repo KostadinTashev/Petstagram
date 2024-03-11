@@ -1,3 +1,39 @@
 from django.db import models
 
-# Create your models here.
+from petstagram.photos.models import Photo
+
+
+class PhotoComment(models.Model):
+    MAX_LENGTH_TEXT = 300
+
+    text = models.CharField(
+        max_length=MAX_LENGTH_TEXT,
+        null=False,
+        blank=False,
+    )
+
+    publication_date_and_time = models.DateTimeField(
+        auto_now_add=True,
+        null=True,
+        blank=True,
+    )
+
+    photo = models.ForeignKey(
+        Photo,
+        on_delete=models.RESTRICT,
+        null=False,
+        blank=True,
+    )
+
+
+class PhotoLike(models.Model):
+    photo = models.ForeignKey(
+        Photo,
+        on_delete=models.RESTRICT,
+        null=False,
+        blank=True,
+    )
+
+    # user = models.ForeignKey(
+    #     User,
+    # )
