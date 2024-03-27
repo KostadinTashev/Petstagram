@@ -1,10 +1,12 @@
+from django.contrib.auth import get_user_model
 from django.core import validators
-from django.core.exceptions import ValidationError
 from django.db import models
 
 from petstagram.core.model_mixins import StrFromFieldsMixin
 from petstagram.pets.models import Pet
 from petstagram.photos.validators import validate_file_less_than_5mb
+
+UserModel = get_user_model()
 
 
 class Photo(StrFromFieldsMixin, models.Model):
@@ -46,4 +48,8 @@ class Photo(StrFromFieldsMixin, models.Model):
     tagged_pets = models.ManyToManyField(
         Pet,
         blank=True,
+    )
+    user = models.ForeignKey(
+        UserModel,
+        on_delete=models.RESTRICT,
     )
